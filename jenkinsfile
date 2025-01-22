@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/joshibijay/test.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './build.sh' // Run your build script
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './test.sh' // Run your test script
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh' // Run your deployment script
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
